@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted,onBeforeUnmount } from 'vue';
 const newItem = ref(20)
 
 let chart = null
@@ -33,6 +33,10 @@ const config = {
   data: data,
 };
 
+onBeforeUnmount(() => {
+    chart.destroy();
+})
+
 onMounted(() => {
   const ctx = document.getElementById('chart')
   chart = new Chart(ctx, config)
@@ -47,6 +51,7 @@ function updateChart() {
 </script>
 
 <template>
+  <h1 class="text-xl text-center mb-5">PieChart</h1>
   <div class=" mx-auto w-[400px] h-[400px] bg-gray-400">
     <canvas id="chart">
     </canvas>
